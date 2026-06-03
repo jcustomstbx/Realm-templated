@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Realm Templates — Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue-primary: #4FC3F7;
+  --blue-dark: #0288D1;
+  --blue-bg: #14181E;
+  --gold-primary: #F5A623;
+  --gold-dark: #C17A00;
+  --gold-bg: #181408;
+  --obsidian-primary: #BF00FF;
+  --obsidian-dark: #7B00CC;
+  --obsidian-bg: #0A0A0F;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #080808;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(255,255,255,0.03) 31px, rgba(255,255,255,0.03) 32px),
+    repeating-linear-gradient(90deg, transparent, transparent 63px, rgba(255,255,255,0.02) 63px, rgba(255,255,255,0.02) 64px);
+  font-family: 'Nunito', sans-serif;
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* ── TOP NAV ── */
+.site-nav {
+  background: #000;
+  border-bottom: 3px solid #222;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-logo {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: #fff;
+  letter-spacing: 1px;
+  -webkit-font-smoothing: none;
+}
+.nav-logo span { color: #4FC3F7; }
+.nav-tabs {
+  display: flex;
+  gap: 0;
+}
+.nav-tab {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: #555;
+  letter-spacing: 0.5px;
+  transition: all 0.15s;
+  -webkit-font-smoothing: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -3px;
+}
+.nav-tab:hover { color: #888; }
+.nav-tab.active { color: var(--tab-colour); border-bottom-color: var(--tab-colour); }
+.nav-tab[data-theme="blue"]     { --tab-colour: #4FC3F7; }
+.nav-tab[data-theme="gold"]     { --tab-colour: #F5A623; }
+.nav-tab[data-theme="obsidian"] { --tab-colour: #BF00FF; }
+
+/* ── HERO BANNER ── */
+.preview-hero {
+  padding: 60px 40px 50px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.preview-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 0%, var(--hero-glow) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero-badge {
+  display: inline-block;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: var(--hero-primary);
+  border: 1px solid var(--hero-primary);
+  padding: 6px 14px;
+  letter-spacing: 1px;
+  margin-bottom: 22px;
+  -webkit-font-smoothing: none;
+  position: relative;
+}
+.hero-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(18px, 3vw, 36px);
+  color: #fff;
+  line-height: 1.6;
+  margin-bottom: 14px;
+  -webkit-font-smoothing: none;
+  position: relative;
+}
+.hero-title span { color: var(--hero-primary); }
+.hero-sub {
+  font-family: 'VT323', monospace;
+  font-size: 22px;
+  color: #888;
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+  position: relative;
+}
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+.btn-hero {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 12px 24px;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  -webkit-font-smoothing: none;
+  transition: transform 0.1s, box-shadow 0.1s;
+  display: inline-block;
+}
+.btn-hero:hover { transform: translate(-2px,-2px); }
+.btn-hero-primary {
+  background: linear-gradient(180deg, var(--hero-light) 0%, var(--hero-primary) 50%, var(--hero-dark) 100%);
+  color: #000;
+  box-shadow: inset 2px 2px 0 rgba(255,255,255,0.3), 3px 3px 0 #000;
+}
+.btn-hero-secondary {
+  background: transparent;
+  color: var(--hero-primary);
+  border: 2px solid var(--hero-primary);
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+}
+
+/* ── VARIANT CARDS ── */
+.variants-section {
+  padding: 0 40px 60px;
+}
+.variants-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.variant-card {
+  border: 3px solid var(--card-primary);
+  background: var(--card-bg);
+  box-shadow: inset 2px 2px 0 rgba(255,255,255,0.04), 6px 6px 0 rgba(0,0,0,0.6);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  overflow: hidden;
+}
+.variant-card:hover {
+  transform: translate(-3px,-3px);
+  box-shadow: inset 2px 2px 0 rgba(255,255,255,0.08), 9px 9px 0 rgba(0,0,0,0.7);
+}
+.card-preview {
+  height: 160px;
+  position: relative;
+  overflow: hidden;
+  background: var(--card-bg);
+}
+.card-preview-header {
+  background: rgba(0,0,0,0.6);
+  border-bottom: 3px solid var(--card-primary);
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  justify-content: space-between;
+}
+.card-preview-logo {
+  width: 24px; height: 24px;
+  border: 2px solid var(--card-primary);
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+.card-preview-btns {
+  display: flex;
+  gap: 6px;
+}
+.card-preview-btn {
+  height: 18px;
+  padding: 0 8px;
+  background: linear-gradient(180deg, var(--card-light) 0%, var(--card-primary) 50%, var(--card-dark) 100%);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 5px;
+  color: #000;
+  box-shadow: 1px 1px 0 #000;
+  display: flex;
+  align-items: center;
+  -webkit-font-smoothing: none;
+}
+.card-preview-hero {
+  padding: 14px 12px 10px;
+  background: linear-gradient(135deg, var(--card-bg) 0%, var(--card-bg-mid) 100%);
+}
+.card-preview-eyebrow {
+  font-family: 'VT323', monospace;
+  font-size: 11px;
+  color: var(--card-accent);
+  letter-spacing: 3px;
+  margin-bottom: 4px;
+}
+.card-preview-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: var(--card-primary);
+  line-height: 1.6;
+  text-shadow: 1px 1px 0 var(--card-dark);
+  -webkit-font-smoothing: none;
+}
+.card-preview-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--card-dark), var(--card-primary), var(--card-light), var(--card-primary), var(--card-dark));
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.card-body {
+  padding: 16px;
+}
+.card-variant-name {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  color: var(--card-primary);
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  -webkit-font-smoothing: none;
+}
+.card-desc {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: #888;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+}
+.card-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.card-tag {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 5px;
+  color: var(--card-primary);
+  border: 1px solid var(--card-primary);
+  padding: 3px 7px;
+  -webkit-font-smoothing: none;
+  letter-spacing: 0.5px;
+}
+.card-price {
+  font-family: 'VT323', monospace;
+  font-size: 28px;
+  color: var(--card-primary);
+  letter-spacing: 1px;
+}
+.card-price .price-old { text-decoration: line-through; color: #444; font-size: 18px; margin-right: 6px; }
+.card-price span {
+  font-size: 16px;
+  color: #555;
+  margin-right: 4px;
+}
+
+/* ── FEATURES SECTION ── */
+.features-section {
+  padding: 50px 40px;
+  border-top: 1px solid #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
+  background: rgba(255,255,255,0.015);
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.section-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: clamp(9px, 1.5vw, 13px);
+  color: var(--hero-primary);
+  letter-spacing: 1px;
+  -webkit-font-smoothing: none;
+}
+.feature-item {
+  text-align: center;
+  padding: 24px 16px;
+  border: 2px solid #1a1a1a;
+  background: rgba(255,255,255,0.02);
+  transition: border-color 0.2s;
+}
+.feature-item:hover { border-color: var(--hero-primary); }
+.feature-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+  display: block;
+}
+.feature-name {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  color: #fff;
+  margin-bottom: 8px;
+  line-height: 1.8;
+  -webkit-font-smoothing: none;
+}
+.feature-desc {
+  font-family: 'VT323', monospace;
+  font-size: 15px;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* ── FOOTER ── */
+.preview-footer {
+  padding: 30px 40px;
+  text-align: center;
+  border-top: 3px solid #111;
+}
+.footer-copy {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: #333;
+  letter-spacing: 1px;
+}
+
+/* ── THEME STATES ── */
+body[data-theme="blue"] {
+  --hero-primary: #4FC3F7;
+  --hero-dark: #0288D1;
+  --hero-light: #B3E5FC;
+  --hero-glow: rgba(79,195,247,0.12);
+}
+body[data-theme="gold"] {
+  --hero-primary: #F5A623;
+  --hero-dark: #C17A00;
+  --hero-light: #FFD97D;
+  --hero-glow: rgba(245,166,35,0.12);
+}
+body[data-theme="obsidian"] {
+  --hero-primary: #BF00FF;
+  --hero-dark: #7B00CC;
+  --hero-light: #E040FB;
+  --hero-glow: rgba(191,0,255,0.12);
+}
+
+/* ── VARIANT CARD THEMES ── */
+.variant-card[data-theme="blue"] {
+  --card-primary: #4FC3F7;
+  --card-dark: #0288D1;
+  --card-light: #B3E5FC;
+  --card-accent: #26C6DA;
+  --card-bg: #14181E;
+  --card-bg-mid: #1C2028;
+}
+.variant-card[data-theme="gold"] {
+  --card-primary: #F5A623;
+  --card-dark: #C17A00;
+  --card-light: #FFD97D;
+  --card-accent: #FFFF55;
+  --card-bg: #181408;
+  --card-bg-mid: #201A08;
+}
+.variant-card[data-theme="obsidian"] {
+  --card-primary: #BF00FF;
+  --card-dark: #7B00CC;
+  --card-light: #E040FB;
+  --card-accent: #D400FF;
+  --card-bg: #0A0A0F;
+  --card-bg-mid: #0F0F18;
+}
+
+@media (max-width: 768px) {
+  .variants-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .site-nav { padding: 0 16px; }
+  .preview-hero, .variants-section, .features-section { padding-left: 16px; padding-right: 16px; }
+}
+</style>
+</head>
+<body data-theme="blue">
+
+<nav class="site-nav">
+  <div class="nav-logo">⛏ REALM <span>TEMPLATES</span></div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-theme="blue" onclick="setTheme('blue',this)">💎 DIAMOND BLUE</button>
+    <button class="nav-tab" data-theme="gold" onclick="setTheme('gold',this)">🏆 GOLD</button>
+    <button class="nav-tab" data-theme="obsidian" onclick="setTheme('obsidian',this)">🌑 OBSIDIAN</button>
+  </div>
+</nav>
+
+<section class="preview-hero">
+  <div class="hero-badge">✦ PREMIUM MINECRAFT TEBEX THEMES</div>
+  <h1 class="hero-title">REALM<br><span>TEMPLATE SERIES</span></h1>
+  <p class="hero-sub">THREE PREMIUM VARIANTS · PIXEL-PERFECT · INSTANT DELIVERY</p>
+  <div class="hero-ctas">
+    <a href="#variants" class="btn-hero btn-hero-primary">🛒 BUY NOW</a>
+    <a href="#features" class="btn-hero btn-hero-secondary">✦ VIEW FEATURES</a>
+  </div>
+</section>
+
+<section class="variants-section" id="variants">
+  <div class="variants-grid">
+
+    <div class="variant-card" data-theme="blue">
+      <div class="card-preview">
+        <div class="card-preview-header">
+          <div class="card-preview-logo">⛏</div>
+          <div class="card-preview-btns">
+            <div class="card-preview-btn">LOGIN</div>
+            <div class="card-preview-btn">🛒 BASKET</div>
+          </div>
+        </div>
+        <div class="card-preview-hero">
+          <div class="card-preview-eyebrow">⛏ WELCOME TO</div>
+          <div class="card-preview-title">YOUR SERVER<br>STORE</div>
+        </div>
+        <div class="card-preview-bar"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-variant-name">💎 DIAMOND BLUE</div>
+        <div class="card-desc">Ice-blue accents on deep dark stone. Clean, sharp and professional — perfect for competitive and SMP servers.</div>
+        <div class="card-tags">
+          <span class="card-tag">PIXEL FONTS</span>
+          <span class="card-tag">PARTICLES</span>
+          <span class="card-tag">SPINNER</span>
+          <span class="card-tag">CONFIG SCHEMA</span>
+        </div>
+        <div class="card-price"><span class="price-old">£19.99</span>£15.99</div>
+      </div>
+    </div>
+
+    <div class="variant-card" data-theme="gold">
+      <div class="card-preview">
+        <div class="card-preview-header">
+          <div class="card-preview-logo">⛏</div>
+          <div class="card-preview-btns">
+            <div class="card-preview-btn">LOGIN</div>
+            <div class="card-preview-btn">🛒 BASKET</div>
+          </div>
+        </div>
+        <div class="card-preview-hero">
+          <div class="card-preview-eyebrow">⛏ WELCOME TO</div>
+          <div class="card-preview-title">YOUR SERVER<br>STORE</div>
+        </div>
+        <div class="card-preview-bar"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-variant-name">🏆 GOLD EDITION</div>
+        <div class="card-desc">Molten gold accents on warm dark stone. Premium feel that communicates high value — ideal for VIP rank stores.</div>
+        <div class="card-tags">
+          <span class="card-tag">PIXEL FONTS</span>
+          <span class="card-tag">PARTICLES</span>
+          <span class="card-tag">SPINNER</span>
+          <span class="card-tag">CONFIG SCHEMA</span>
+        </div>
+        <div class="card-price"><span class="price-old">£19.99</span>£15.99</div>
+      </div>
+    </div>
+
+    <div class="variant-card" data-theme="obsidian">
+      <div class="card-preview">
+        <div class="card-preview-header">
+          <div class="card-preview-logo">⛏</div>
+          <div class="card-preview-btns">
+            <div class="card-preview-btn">LOGIN</div>
+            <div class="card-preview-btn">🛒 BASKET</div>
+          </div>
+        </div>
+        <div class="card-preview-hero">
+          <div class="card-preview-eyebrow">⛏ WELCOME TO</div>
+          <div class="card-preview-title">YOUR SERVER<br>STORE</div>
+        </div>
+        <div class="card-preview-bar"></div>
+      </div>
+      <div class="card-body">
+        <div class="card-variant-name">🌑 OBSIDIAN EDITION</div>
+        <div class="card-desc">Neon purple on near-black obsidian. Dark, electric and bold — built for high-end gaming communities and Discord setups.</div>
+        <div class="card-tags">
+          <span class="card-tag">PIXEL FONTS</span>
+          <span class="card-tag">PARTICLES</span>
+          <span class="card-tag">SPINNER</span>
+          <span class="card-tag">CONFIG SCHEMA</span>
+        </div>
+        <div class="card-price"><span class="price-old">£19.99</span>£15.99</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="features-section" id="features">
+  <div class="section-header">
+    <div class="section-title">✦ WHAT'S INCLUDED IN EVERY PACK</div>
+  </div>
+  <div class="features-grid">
+    <div class="feature-item">
+      <span class="feature-icon">🎨</span>
+      <div class="feature-name">PIXEL TYPOGRAPHY</div>
+      <div class="feature-desc">Press Start 2P & VT323 fonts for an authentic Minecraft feel</div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">✨</span>
+      <div class="feature-name">HERO PARTICLES</div>
+      <div class="feature-desc">28 animated pixel particles drift across the hero section</div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">⚡</span>
+      <div class="feature-name">LOADING SPINNER</div>
+      <div class="feature-desc">Custom diamond spinner overlay on every page transition</div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🛒</span>
+      <div class="feature-name">CUSTOM ACTIONS</div>
+      <div class="feature-desc">Styled Add to Basket, Subscribe & Gift buttons on every product</div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">⚙️</span>
+      <div class="feature-name">CONFIG SCHEMA</div>
+      <div class="feature-desc">Customise hero text, colours & links from the Tebex dashboard</div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">📱</span>
+      <div class="feature-name">FULLY RESPONSIVE</div>
+      <div class="feature-desc">Flawless rendering on desktop, tablet and mobile</div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">📦</span>
+      <div class="feature-name">INSTANT DELIVERY</div>
+      <div class="feature-desc">Download immediately after purchase — 16 files, ready to paste</div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">📖</span>
+      <div class="feature-name">SETUP GUIDE</div>
+      <div class="feature-desc">Full SETUP.md with step-by-step instructions included</div>
+    </div>
+  </div>
+</section>
+
+<footer class="preview-footer">
+  <div class="footer-copy">© 2025 REALM TEMPLATES · NOT AFFILIATED WITH MOJANG OR TEBEX</div>
+</footer>
+
+<script>
+function setTheme(theme, btn) {
+  document.body.setAttribute('data-theme', theme);
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
